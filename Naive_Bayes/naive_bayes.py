@@ -12,7 +12,7 @@ import numpy as np
 newsdata = {'data' : [], 'target' : [], 'target_names' :
             ['기쁨', '슬픔', '화남', '불안', '중립']}
 
-f = open('add_sad_train.csv', 'r', encoding='utf-8')
+f = open('final_traindata.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
@@ -21,18 +21,6 @@ for line in rdr:
             newsdata['target'].append(int(line[1]))
     except:
         pass
-    
-##    if(line[1]=='기쁨' or line[1]=='슬픔' or line[1]=='화남' or line[1]=='중립'):
-##        newsdata['data'].append(line[0])
-##    
-##    if(line[1]=='기쁨'):
-##        newsdata['target'].append(1)
-##    if(line[1]=='슬픔'):
-##        newsdata['target'].append(2)
-##    if(line[1]=='화남'):
-##        newsdata['target'].append(3)
-##    if(line[1]=='중립'):
-##        newsdata['target'].append(5)
     
 f.close()
 
@@ -45,27 +33,16 @@ newsdata['target'] = np.array(newsdata['target'])
 newsdata_test = {'data' : [], 'target' : [], 'target_names' :
             ['기쁨', '슬픔', '화남', '불안', '중립']}
 
-f = open('add_sad_test.csv', 'r', encoding='utf-8')
+f = open('final_testdata.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
-        if(1<=int(line[1])<=5):
+        if(1<=int(float(line[1]))<=5):
             newsdata_test['data'].append(line[0])
-            newsdata_test['target'].append(int(line[1]))
+            newsdata_test['target'].append(int(float(line[1])))
     except:
         pass
-##    if(line[1]=='기쁨' or line[1]=='슬픔' or line[1]=='화남' or line[1]=='중립'):
-##        newsdata_test['data'].append(line[0])
-    
-##    if(line[1]=='기쁨'):
-##        newsdata_test['target'].append(1)
-##    if(line[1]=='슬픔'):
-##        newsdata_test['target'].append(2)
-##    if(line[1]=='화남'):
-##        newsdata_test['target'].append(3)
-##    if(line[1]=='중립'):
-##        newsdata_test['target'].append(5)
-    
+
 f.close()
 
 newsdata_test['target'] = np.array(newsdata_test['target'])

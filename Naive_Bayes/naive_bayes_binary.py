@@ -13,12 +13,12 @@ flag = 0
 newsdata = {'data' : [], 'target' : [], 'target_names' :
             ['슬픔', '슬픔아님']}
 
-f = open('tokened_traindataset.csv', 'r', encoding='utf-8')
+f = open('final_traindata.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
-        if(1<=int(line[1])<=5):
-            if(int(line[1]) == 2):
+        if(1<=int(float(line[1]))<=5):
+            if(int(float(line[1])) == 2):
                 newsdata['data'].append(line[0])
                 newsdata['target'].append(0)
                 flag = flag + 1
@@ -40,16 +40,19 @@ newsdata['target'] = np.array(newsdata['target'])
 newsdata_test = {'data' : [], 'target' : [], 'target_names' :
             ['슬픔', '슬픔아님']}
 
-f = open('sad_test_data.csv', 'r', encoding='utf-8')
+f = open('final_testdata.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
-        if(1<=int(line[1])<=5):
-            newsdata_test['data'].append(line[0])
-            if(int(line[1]) == 2):
+        if(1<=int(float(line[1]))<=5):
+            if(int(float(line[1])) == 2):
+                newsdata_test['data'].append(line[0])
                 newsdata_test['target'].append(0)
-            else:
+                flag = flag + 1
+            elif(flag != 0):
+                newsdata_test['data'].append(line[0])
                 newsdata_test['target'].append(1)
+                flag = flag - 1
     except:
         pass
     

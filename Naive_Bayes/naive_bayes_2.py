@@ -10,6 +10,7 @@ import numpy as np
 #train dataset 로딩
 
 datacount = [0,0,0,0,0,0]
+datacount_test = [0,0,0,0,0,0]
 flag = 0
 
 newsdata = {'data' : [], 'target' : [], 'target_names' :
@@ -18,7 +19,7 @@ newsdata = {'data' : [], 'target' : [], 'target_names' :
 newsdata_test = {'data' : [], 'target' : [], 'target_names' :
             ['기쁨', '슬픔', '화남', '불안', '중립']}
 
-f = open('tweetlist(ansi).csv', 'r', encoding='utf-8')
+f = open('final_traindata.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
@@ -28,25 +29,37 @@ for line in rdr:
                 newsdata['target'].append(int(line[1]))
                 datacount[int(line[1])] = datacount[int(line[1])] + 1
                 flag = flag + 1
-            elif(flag != 0):
+            elif(flag == 4):
                 newsdata['data'].append(line[0])
                 newsdata['target'].append(int(line[1]))
                 datacount[int(line[1])] = datacount[int(line[1])] + 1
-                flag = flag -1 
+                flag = flag - 4 
             
     except:
         pass
     
 f.close()
 
-newsdata_test['target'] = list(newsdata['target'])[1600:]
-newsdata_test['data'] = list(newsdata['data'])[1600:]
-
-newsdata['target'] = newsdata['target'][:1600]
-newsdata['data'] = newsdata['data'][:1600]
-
-newsdata['target'] = np.array(newsdata['target'])
-newsdata_test['target'] = np.array(newsdata_test['target'])
+f = open('final_testdata.csv', 'r', encoding='utf-8')
+rdr = csv.reader(f)
+for line in rdr:
+    try:
+        if(1<=int(float(line[1]))<=5):
+            if(int(float(line[1])) != 5):
+                newsdata_test['data'].append(line[0])
+                newsdata_test['target'].append(int(float(line[1])))
+                datacount_test[int(line[1])] = datacount_test[int(float(line[1]))] + 1
+                flag = flag + 1
+            elif(flag == 4):
+                newsdata_test['data'].append(line[0])
+                newsdata_test['target'].append(int(line[1]))
+                datacount_test[int(line[1])] = datacount_test[int(float(line[1]))] + 1
+                flag = flag - 4 
+            
+    except:
+        pass
+    
+f.close()
 
 
 # 나이브 베이즈 분류
@@ -68,6 +81,5 @@ tfidfv_test = tfidf_transformer.transform(X_test_dtm)
 predicted = mod.predict(tfidfv_test)
 print("정확도:", accuracy_score(newsdata_test['target'], predicted))
 
-mod.predict()
 
 input()
