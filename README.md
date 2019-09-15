@@ -10,7 +10,7 @@ Bert
 
 max value of classification accuracy
 
-Naive_bayes :	0.787463976945245
+Naive_bayes :	0.918757467144564
 
 SVM :		0.734870317002881
 
