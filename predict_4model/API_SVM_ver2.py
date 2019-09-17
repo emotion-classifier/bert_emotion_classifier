@@ -15,15 +15,8 @@ def get_noun(text):
     return [n for n in nouns]
 
 def support_vector_api(tweet):
-    print("로딩중입니다")
     with open('support_vector.model', 'rb') as f:
         text_clf_svm = pickle.load(f)
-        #cv = pickle.load(f)
-
-    #tfidf_transformer = TfidfTransformer()
-    #Xtest2 = cv.transform([tweet])
-    #tfidfv_t2 = tfidf_transformer.fit_transform(Xtest2)
-
     return text_clf_svm.predict([tweet])[0]
 
 def call_api(tweet):
