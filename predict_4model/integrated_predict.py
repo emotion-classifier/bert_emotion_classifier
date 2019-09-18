@@ -16,6 +16,7 @@ while True:
     svm = API_SVM_ver2.call_api(input_text)
     bilstm = biLSTM_api.call_api(input_text)
     bert = bert_api.call_api(input_text)
+    print(input_text)
     print("navie_bayes predict : \t\t\t\t", naive_bayes)
     print("support vector machine predict : \t", svm)
     print("biLSTM predict : \t\t\t\t\t", bilstm)
