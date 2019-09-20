@@ -42,7 +42,7 @@ tdm = cv.fit_transform(train["tweet"].values.astype('U'))
 #SVM으로 분류학습
 text_clf_svm = Pipeline([('vect', CountVectorizer(tokenizer=get_morphs)),
                          ('tfidf', TfidfTransformer()),
-                         ('clf-svm', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, n_iter=5, random_state=42))])
+                         ('clf-svm', SGDClassifier(loss='hinge', penalty='l2', n_iter=5, random_state=42))])
 
 text_clf_svm = text_clf_svm.fit(train["tweet"].values.astype('U'), train["sentiment"])
 
