@@ -24,25 +24,23 @@ test = test[~test.isin([np.nan, np.inf, -np.inf]).any(1)]
 #train, test = train_test_split(data, test_size=0.20, random_state=42)
 
 #분리된 데이터셋 확인
-train["sentiment"] = pd.Categorical(train["sentiment"])
-
 print(train.groupby("sentiment").count())
 print(test.groupby("sentiment").count())
 
-#명사 추출하여 TDM 생성
-def get_noun(text):
+#형태소 추출하여 TDM 생성
+def get_morphs(text):
     tokenizer = Okt()
-    nouns = tokenizer.nouns(text)
-    return [n for n in nouns]
+    morphs = tokenizer.morphs(text)
+    return [n for n in morphs]
 
 #Bag of words
-cv = CountVectorizer(tokenizer=get_noun)
+cv = CountVectorizer(tokenizer=get_morphs)
 tdm = cv.fit_transform(train["tweet"].values.astype('U'))
 
 #print(cv.vocabulary_)
 
 #SVM으로 분류학습
-text_clf_svm = Pipeline([('vect', CountVectorizer(tokenizer=get_noun)),
+text_clf_svm = Pipeline([('vect', CountVectorizer(tokenizer=get_morphs)),
                          ('tfidf', TfidfTransformer()),
                          ('clf-svm', SGDClassifier(loss='hinge', penalty='l2', alpha=1e-3, n_iter=5, random_state=42))])
 
@@ -52,6 +50,5 @@ text_clf_svm = text_clf_svm.fit(train["tweet"].values.astype('U'), train["sentim
 predicted_svm = text_clf_svm.predict(test["tweet"])
 print(predicted_svm)
 print(np.mean(predicted_svm == test["sentiment"]))
-
 print(text_clf_svm.predict(["진짜 예쁘다", "열애 보도를 인정했다", "큰 부상이 아니었으면", "씨발"]))
 
