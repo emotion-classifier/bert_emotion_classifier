@@ -56,7 +56,7 @@ flags.DEFINE_string(
 ## Other parameters
 
 flags.DEFINE_string(
-    "init_checkpoint", os.getcwd() + "/half_neutral_add_sad0.8063/model.ckpt-0",
+    "init_checkpoint", os.getcwd() + "/half_neutral_add_sad0.8063/model.ckpt-16247",
     "Initial checkpoint (usually from a pre-trained BERT model).")
 
 flags.DEFINE_bool(
