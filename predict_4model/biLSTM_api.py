@@ -7,7 +7,7 @@ warnings.filterwarnings(action='ignore')
 
 print("load model...")
 model_ft = FastText.load_fasttext_format("model_drama.bin")
-model = load_model("model/rec-half_neutral_add_tag_sad_train.csv-30-0.7099.hdf5")
+model = load_model("model/rec-balanced_add_sad_train_data.csv-30-0.7204.hdf5")
 def featurize_rnn(corpus,wdim,maxlen):
     rnn_total = np.zeros((len(corpus),maxlen,wdim))
     for i in range(len(corpus)):
