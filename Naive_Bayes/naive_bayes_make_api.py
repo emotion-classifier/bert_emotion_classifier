@@ -10,22 +10,36 @@ import pickle
 
 #train dataset 로딩
 
+datacount = [0,0,0,0,0,0]
+datacount_test = [0,0,0,0,0,0]
+flag = 0
+
 newsdata = {'data' : [], 'target' : [], 'target_names' :
             ['기쁨', '슬픔', '화남', '불안', '중립']}
 
-f = open('final_traindata.csv', 'r', encoding='utf-8')
+newsdata_test = {'data' : [], 'target' : [], 'target_names' :
+            ['기쁨', '슬픔', '화남', '불안', '중립']}
+
+f = open('tokened_balanced_add_sad_half_neutral_train_data.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
         if(1<=int(line[1])<=5):
-            newsdata['data'].append(line[0])
-            newsdata['target'].append(int(line[1]))
+            if(int(line[1]) != 5):
+                newsdata['data'].append(line[0])
+                newsdata['target'].append(int(line[1]))
+                datacount[int(line[1])] = datacount[int(line[1])] + 1
+                flag = flag + 1
+            elif(flag == 4):
+                newsdata['data'].append(line[0])
+                newsdata['target'].append(int(line[1]))
+                datacount[int(line[1])] = datacount[int(line[1])] + 1
+                flag = flag - 4 
+            
     except:
         pass
     
 f.close()
-
-newsdata['target'] = np.array(newsdata['target'])
 
 
 # 나이브 베이즈 분류

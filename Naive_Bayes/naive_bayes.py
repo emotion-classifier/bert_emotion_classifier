@@ -12,7 +12,7 @@ import numpy as np
 newsdata = {'data' : [], 'target' : [], 'target_names' :
             ['기쁨', '슬픔', '화남', '불안', '중립']}
 
-f = open('final_traindata.csv', 'r', encoding='utf-8')
+f = open('half_neutral_add_tag_sad_train.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
@@ -33,7 +33,7 @@ newsdata['target'] = np.array(newsdata['target'])
 newsdata_test = {'data' : [], 'target' : [], 'target_names' :
             ['기쁨', '슬픔', '화남', '불안', '중립']}
 
-f = open('final_testdata.csv', 'r', encoding='utf-8')
+f = open('half_neutral_add_tag_sad_test.csv', 'r', encoding='utf-8')
 rdr = csv.reader(f)
 for line in rdr:
     try:
@@ -69,5 +69,9 @@ tfidfv_test = tfidf_transformer.transform(X_test_dtm)
 
 predicted = mod.predict(tfidfv_test)
 print("정확도:", accuracy_score(newsdata_test['target'], predicted))
+
+pred = ["너무 조앙", "인생 너무 힘들어","흐에에에엥", "미친 놈아 탄핵 해야한다"]
+print(mod.predict(tfidf_transformer.transform(dtmvector.transform(pred))))
+
 
 input()
