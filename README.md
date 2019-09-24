@@ -8,15 +8,7 @@ biLSTM
 
 Bert
 
-max value of classification accuracy
-
-Naive_bayes :	0.918757467144564
-
-SVM :		0.838174273858921
-
-biLSTM :	0.7666
-
-Bert :		0.8063
+you can see the accuracy of macro and micro in the accuracy excel file.
 
 
 Bert model is too big to upload in git.
